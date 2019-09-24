@@ -1,9 +1,27 @@
 package br.ufrn.imd.material.dominio;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USUARIO")
+	@SequenceGenerator(name = "SEQ_USUARIO", sequenceName = "seq_id_usuario", allocationSize = 1)
 	private Integer id;
+	
 	private String nome;
+	
+	@NotBlank
 	private String login;
+	
+	@NotBlank
 	private String senha;
 	
 	public Usuario() {
