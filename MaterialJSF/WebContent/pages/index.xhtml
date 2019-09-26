@@ -10,7 +10,8 @@
 		</h4>
 		<h:form>
 			<p><h:commandLink action="#{materialMBean.novoMaterial}" value="Novo Material"/></p>
-			<p><h:commandLink action="#{materialMBean.listarMateriais}" value="Listar Materiais" /></p>
+			<p><h:commandLink action="#{materialMBean.listarMateriais}" value="Listar todos os materiais" /></p>
+			<p><h:commandLink action="#{materialMBean.listarMateriaisPorUsuario}" value="Listar seus materiais" /></p>
 		</h:form>
 	</ui:define>
 </ui:composition>

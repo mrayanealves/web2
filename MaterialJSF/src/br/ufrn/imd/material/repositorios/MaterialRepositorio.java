@@ -1,28 +1,57 @@
 package br.ufrn.imd.material.repositorios;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import br.ufrn.imd.material.dominio.Material;
 
+@Stateless
 public class MaterialRepositorio {
-	public static List<Material> materiais;
+	@PersistenceContext
+	private EntityManager em;
 	
-	public static void adicionar(Material material) {
-		if (materiais == null) {
-			materiais = new ArrayList<Material>();
-		}
-		materiais.add(material);
+	@SuppressWarnings("unchecked")
+	public List<Material> getMateriais() {
+		return (List<Material>) em.createQuery("select m from Material m ").getResultList();
 	}
 	
-	public static void remover(Material material) {
-		if (materiais == null) {
-			return;
+	public void salvar(Material material) {
+		if (material.getId() == null) {
+			em.persist(material);
+		} else {
+			em.merge(material);
 		}
-		materiais.remove(material);
 	}
 	
-	public static List<Material> listarMateriais() {
-		return materiais;
+	public void remover(Material material) {
+		material = em.find(Material.class, material.getId());
+		em.remove(material);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Material> buscarMaterialPorUsuario(String login) {
+		String jpaql = "select m from Material m where m.usuarioCadastro.login = :login";
+		
+		Query query = em.createQuery(jpaql);
+		query.setParameter("login", login);
+		
+		return (List<Material>) query.getResultList();
+	}
+	
+	public Material buscarMaterialPorCodigo(String codigo) {
+		try {
+			String jpaql = "select m from Material m where m.codigo = :codigo";
+			Query query = em.createQuery(jpaql);
+			
+			return (Material) query.getSingleResult();
+			
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

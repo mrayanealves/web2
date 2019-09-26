@@ -8,8 +8,12 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.ufrn.imd.material.dominio.Material;
+import br.ufrn.imd.material.dominio.Usuario;
 import br.ufrn.imd.material.repositorios.MaterialRepositorio;
 
 @Named
@@ -23,6 +27,10 @@ public class MaterialMBean implements Serializable {
 	@Inject
 	private UsuarioMBean usuarioMBean;
 	
+	@Inject
+	private MaterialRepositorio materialRepositorio;
+	
+
 	public MaterialMBean() {
 		material = new Material();
 	}
@@ -31,19 +39,22 @@ public class MaterialMBean implements Serializable {
 		return "/pages/material/form.jsf";
 	}	
 	public String listarMateriais() {
-		materiaisModel = new ListDataModel<Material>
-		(MaterialRepositorio.listarMateriais());
+		materiaisModel = new ListDataModel<Material> (materialRepositorio.getMateriais());
+		return "/pages/material/list.jsf";
+	}
+	public String listarMateriaisPorUsuario() {
+		materiaisModel = new ListDataModel<Material> (materialRepositorio.buscarMaterialPorUsuario(usuarioMBean.getUsuarioLogado().getLogin()));
 		return "/pages/material/list.jsf";
 	}
 	public String cadastrarMaterial() {
 		material.setUsuarioCadastro(usuarioMBean.getUsuarioLogado());
-		MaterialRepositorio.adicionar(material);
+		materialRepositorio.salvar(material);
 		material = new Material();
 		return "/pages/material/form.jsf";
 	}
 	public String removerMaterial() {
 		Material materialRemovido = materiaisModel.getRowData();
-		MaterialRepositorio.remover(materialRemovido);
+		materialRepositorio.remover(materialRemovido);
 		return listarMateriais();
 	}
 	
