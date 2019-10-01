@@ -1,12 +1,12 @@
-package br.ufrn.imd.material.repositorios;
+package br.ufrn.imd.rayserva.repositorio;
 
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import br.ufrn.imd.material.dominio.Usuario;
+import br.ufrn.imd.rayserva.dominio.Usuario;
 
 @Stateless
 public class UsuarioRepositorio {
