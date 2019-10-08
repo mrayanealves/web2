@@ -1,5 +1,7 @@
 package br.ufrn.imd.rayserva.controller;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -11,7 +13,7 @@ import br.ufrn.imd.rayserva.repositorio.ReservaRepositorio;
 
 @Named
 @SessionScoped
-public class ReservaMBean {
+public class ReservaMBean implements Serializable{
 	private Reserva reserva;
 	
 	private DataModel<Reserva> reservasModel;
@@ -26,21 +28,25 @@ public class ReservaMBean {
 		reserva = new Reserva();
 		return "/paginas/reserva/form.jsf";
 	}	
+	
 	public String listarReservas() {
 		reservasModel = new ListDataModel<Reserva> (reservaRepositorio.getReservas());
 		return "/paginas/reserva/list.jsf";
 	}
+	
 	public String listarReservasPorUsuario() {
 		reservasModel = new ListDataModel<Reserva> (reservaRepositorio.buscarReservaPorUsuario(usuarioMBean.getUsuarioLogado().getLogin()));
 		return "/paginas/reserva/list.jsf";
 	}
-	public String cadastrarMaterial() {
+	
+	public String cadastrarReserva() {
 		reserva.setUsuario(usuarioMBean.getUsuarioLogado());
 		reservaRepositorio.salvar(reserva);
 		reserva = new Reserva();
 		return "/paginas/reserva/form.jsf";
 	}
-	public String removerMaterial() {
+	
+	public String removerReserva() {
 		Reserva reservaRemovido = reservasModel.getRowData();
 		reservaRepositorio.remover(reservaRemovido);
 		return listarReservas();

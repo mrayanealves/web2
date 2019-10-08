@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"></meta>
-<title>Index</title>
-</head>
-<body>
-	<p>Rayserva</p>
-</body>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/include/template.xhtml">
+	
+	<ui:define name="conteudo">
+		<h:messages />
+		 <div class="container">
+		    <div class="row">
+		      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+		        <div class="card card-signin my-5">
+		          <div class="card-body">
+		            <h5 class="card-title text-center">Sign In</h5>
+		            <form class="form-signin">
+		              <div class="form-label-group">
+		                <h:inputText type="email" id="inputEmail" class="form-control" placeholder="Email address" />
+		                <label for="inputEmail">Email address</label>
+		              </div>
+		
+		              <div class="form-label-group">
+		                <h:inputSecret type="password" id="inputPassword" class="form-control" placeholder="Password" />
+		                <label for="inputPassword">Password</label>
+		              </div>
+		              
+		              <h:commandButton class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</h:commandButton>		     
+		            </form>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+	</ui:define>
+</ui:composition>
