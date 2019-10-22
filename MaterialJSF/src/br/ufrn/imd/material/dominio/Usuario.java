@@ -8,6 +8,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -32,6 +34,7 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	@JsonIgnore
 	public Integer getId() {
 		return id;
 	}
@@ -56,6 +59,7 @@ public class Usuario {
 		this.login = login;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}

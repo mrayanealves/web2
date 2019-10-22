@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "material")
 public class Material {
@@ -34,6 +36,7 @@ public class Material {
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuarioCadastro;
 	
+	@JsonIgnore
 	public Integer getId() {
 		return id;
 	}
